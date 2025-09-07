@@ -19,6 +19,10 @@ const Integrations = React.lazy(() => import('@/features/integrations/pages/Inte
 const CalendarIntegrations = React.lazy(() => import('@/features/integrations/pages/CalendarIntegrations'))
 const VideoIntegrations = React.lazy(() => import('@/features/integrations/pages/VideoIntegrations'))
 const WebhookIntegrations = React.lazy(() => import('@/features/integrations/pages/WebhookIntegrations'))
+const Workflows = React.lazy(() => import('@/features/workflows/pages/Workflows'))
+const CreateWorkflow = React.lazy(() => import('@/features/workflows/pages/CreateWorkflow'))
+const EditWorkflow = React.lazy(() => import('@/features/workflows/pages/EditWorkflow'))
+const WorkflowTemplates = React.lazy(() => import('@/features/workflows/pages/WorkflowTemplates'))
 
 // Create a client
 const queryClient = new QueryClient({
@@ -127,6 +131,10 @@ function App() {
                 <Route path={ROUTES.INTEGRATIONS_CALENDAR} element={<CalendarIntegrations />} />
                 <Route path={ROUTES.INTEGRATIONS_VIDEO} element={<VideoIntegrations />} />
                 <Route path={ROUTES.INTEGRATIONS_WEBHOOKS} element={<WebhookIntegrations />} />
+                <Route path={ROUTES.WORKFLOWS} element={<Workflows />} />
+                <Route path={ROUTES.WORKFLOW_CREATE} element={<CreateWorkflow />} />
+                <Route path={ROUTES.WORKFLOW_EDIT} element={<EditWorkflow />} />
+                <Route path={ROUTES.WORKFLOW_TEMPLATES} element={<WorkflowTemplates />} />
               </Route>
 
               {/* Catch all */}
