@@ -342,6 +342,8 @@ export type MFASetupFormData = z.infer<typeof mfaSetupSchema>
 export type MFAVerificationFormData = z.infer<typeof mfaVerificationSchema>
 export type InvitationFormData = z.infer<typeof invitationSchema>
 export type InvitationResponseFormData = z.infer<typeof invitationResponseSchema>
+export type ContactFormData = z.infer<typeof contactSchema>
+export type ContactGroupFormData = z.infer<typeof contactGroupSchema>
 
 // Form state types
 export interface FormState<T = any> {

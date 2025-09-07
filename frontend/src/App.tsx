@@ -23,6 +23,9 @@ const Workflows = React.lazy(() => import('@/features/workflows/pages/Workflows'
 const CreateWorkflow = React.lazy(() => import('@/features/workflows/pages/CreateWorkflow'))
 const EditWorkflow = React.lazy(() => import('@/features/workflows/pages/EditWorkflow'))
 const WorkflowTemplates = React.lazy(() => import('@/features/workflows/pages/WorkflowTemplates'))
+const Contacts = React.lazy(() => import('@/features/contacts/pages/Contacts'))
+const ContactGroups = React.lazy(() => import('@/features/contacts/pages/ContactGroups'))
+const ContactImport = React.lazy(() => import('@/features/contacts/pages/ContactImport'))
 
 // Create a client
 const queryClient = new QueryClient({
@@ -135,6 +138,9 @@ function App() {
                 <Route path={ROUTES.WORKFLOW_CREATE} element={<CreateWorkflow />} />
                 <Route path={ROUTES.WORKFLOW_EDIT} element={<EditWorkflow />} />
                 <Route path={ROUTES.WORKFLOW_TEMPLATES} element={<WorkflowTemplates />} />
+                <Route path={ROUTES.CONTACTS} element={<Contacts />} />
+                <Route path={ROUTES.CONTACT_GROUPS} element={<ContactGroups />} />
+                <Route path={ROUTES.CONTACT_IMPORT} element={<ContactImport />} />
               </Route>
 
               {/* Catch all */}
