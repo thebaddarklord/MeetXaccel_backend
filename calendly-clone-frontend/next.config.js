@@ -1,8 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    appDir: true,
-  },
   images: {
     domains: ['localhost', 'your-backend-domain.com'],
     formats: ['image/webp', 'image/avif'],
