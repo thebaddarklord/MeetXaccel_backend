@@ -26,6 +26,10 @@ const WorkflowTemplates = React.lazy(() => import('@/features/workflows/pages/Wo
 const Contacts = React.lazy(() => import('@/features/contacts/pages/Contacts'))
 const ContactGroups = React.lazy(() => import('@/features/contacts/pages/ContactGroups'))
 const ContactImport = React.lazy(() => import('@/features/contacts/pages/ContactImport'))
+const Notifications = React.lazy(() => import('@/features/notifications/pages/Notifications'))
+const NotificationTemplates = React.lazy(() => import('@/features/notifications/pages/NotificationTemplates'))
+const NotificationLogs = React.lazy(() => import('@/features/notifications/pages/NotificationLogs'))
+const NotificationPreferences = React.lazy(() => import('@/features/notifications/pages/NotificationPreferences'))
 
 // Create a client
 const queryClient = new QueryClient({
@@ -141,6 +145,10 @@ function App() {
                 <Route path={ROUTES.CONTACTS} element={<Contacts />} />
                 <Route path={ROUTES.CONTACT_GROUPS} element={<ContactGroups />} />
                 <Route path={ROUTES.CONTACT_IMPORT} element={<ContactImport />} />
+                <Route path={ROUTES.NOTIFICATIONS} element={<Notifications />} />
+                <Route path={ROUTES.NOTIFICATION_TEMPLATES} element={<NotificationTemplates />} />
+                <Route path={ROUTES.NOTIFICATION_LOGS} element={<NotificationLogs />} />
+                <Route path={ROUTES.NOTIFICATION_PREFERENCES} element={<NotificationPreferences />} />
               </Route>
 
               {/* Catch all */}

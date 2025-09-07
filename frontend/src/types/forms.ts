@@ -345,6 +345,42 @@ export type InvitationResponseFormData = z.infer<typeof invitationResponseSchema
 export type ContactFormData = z.infer<typeof contactSchema>
 export type ContactGroupFormData = z.infer<typeof contactGroupSchema>
 
+// Notification Forms
+export const notificationTemplateSchema = z.object({
+  name: z.string().min(1, 'Template name is required').max(200, 'Name is too long'),
+  template_type: z.enum(['booking_confirmation', 'booking_reminder', 'booking_cancellation', 'booking_rescheduled', 'follow_up', 'custom']),
+  notification_type: z.enum(['email', 'sms']),
+  subject: z.string().max(200, 'Subject is too long').optional(),
+  message: z.string().min(1, 'Message is required'),
+  is_active: z.boolean().optional(),
+  is_default: z.boolean().optional(),
+})
+
+export const sendNotificationSchema = z.object({
+  notification_type: z.enum(['email', 'sms']),
+  template_id: z.string().optional(),
+  recipient_email: z.string().email('Please enter a valid email address').optional(),
+  recipient_phone: z.string().optional(),
+  subject: z.string().max(200, 'Subject is too long').optional(),
+  message: z.string().min(1, 'Message is required'),
+  booking_id: z.string().optional(),
+  send_immediately: z.boolean().optional(),
+  scheduled_for: z.string().optional(),
+}).refine(data => {
+  if (data.notification_type === 'email' && !data.recipient_email) {
+    return false
+  }
+  if (data.notification_type === 'sms' && !data.recipient_phone) {
+    return false
+  }
+  return true
+}, {
+  message: 'Recipient is required for the selected notification type',
+})
+export type NotificationTemplateFormData = z.infer<typeof notificationTemplateSchema>
+export type NotificationPreferenceFormData = z.infer<typeof notificationPreferenceSchema>
+export type SendNotificationFormData = z.infer<typeof sendNotificationSchema>
+
 // Form state types
 export interface FormState<T = any> {
   data: T
