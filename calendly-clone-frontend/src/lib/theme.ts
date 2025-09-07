@@ -2,7 +2,7 @@
 
 import { createTheme, ThemeOptions } from '@mui/material/styles';
 import { Roboto } from 'next/font/google';
-import { colors, typography, spacing, borderRadius, shadows, transitions } from './theme/tokens';
+import { tokens } from './theme/tokens';
 
 const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
@@ -12,76 +12,76 @@ const roboto = Roboto({
 
 const baseTheme: ThemeOptions = {
   typography: {
-    fontFamily: typography.fontFamily.primary,
+    fontFamily: tokens.typography.fontFamily.primary,
     h1: {
-      fontSize: typography.fontSize['4xl'],
-      fontWeight: typography.fontWeight.bold,
-      lineHeight: typography.lineHeight.tight,
-      letterSpacing: typography.letterSpacing.tight,
+      fontSize: tokens.typography.fontSize['4xl'],
+      fontWeight: tokens.typography.fontWeight.bold,
+      lineHeight: tokens.typography.lineHeight.tight,
+      letterSpacing: tokens.typography.letterSpacing.tight,
     },
     h2: {
-      fontSize: typography.fontSize['3xl'],
-      fontWeight: typography.fontWeight.semibold,
-      lineHeight: typography.lineHeight.tight,
-      letterSpacing: typography.letterSpacing.tight,
+      fontSize: tokens.typography.fontSize['3xl'],
+      fontWeight: tokens.typography.fontWeight.semibold,
+      lineHeight: tokens.typography.lineHeight.tight,
+      letterSpacing: tokens.typography.letterSpacing.tight,
     },
     h3: {
-      fontSize: typography.fontSize['2xl'],
-      fontWeight: typography.fontWeight.semibold,
-      lineHeight: typography.lineHeight.tight,
+      fontSize: tokens.typography.fontSize['2xl'],
+      fontWeight: tokens.typography.fontWeight.semibold,
+      lineHeight: tokens.typography.lineHeight.tight,
     },
     h4: {
-      fontSize: typography.fontSize.xl,
-      fontWeight: typography.fontWeight.medium,
-      lineHeight: typography.lineHeight.normal,
+      fontSize: tokens.typography.fontSize.xl,
+      fontWeight: tokens.typography.fontWeight.medium,
+      lineHeight: tokens.typography.lineHeight.normal,
     },
     h5: {
-      fontSize: typography.fontSize.lg,
-      fontWeight: typography.fontWeight.medium,
-      lineHeight: typography.lineHeight.normal,
+      fontSize: tokens.typography.fontSize.lg,
+      fontWeight: tokens.typography.fontWeight.medium,
+      lineHeight: tokens.typography.lineHeight.normal,
     },
     h6: {
-      fontSize: typography.fontSize.base,
-      fontWeight: typography.fontWeight.medium,
-      lineHeight: typography.lineHeight.normal,
+      fontSize: tokens.typography.fontSize.base,
+      fontWeight: tokens.typography.fontWeight.medium,
+      lineHeight: tokens.typography.lineHeight.normal,
     },
     body1: {
-      fontSize: typography.fontSize.base,
-      lineHeight: typography.lineHeight.normal,
+      fontSize: tokens.typography.fontSize.base,
+      lineHeight: tokens.typography.lineHeight.normal,
     },
     body2: {
-      fontSize: typography.fontSize.sm,
-      lineHeight: typography.lineHeight.normal,
+      fontSize: tokens.typography.fontSize.sm,
+      lineHeight: tokens.typography.lineHeight.normal,
     },
     caption: {
-      fontSize: typography.fontSize.xs,
-      lineHeight: typography.lineHeight.tight,
+      fontSize: tokens.typography.fontSize.xs,
+      lineHeight: tokens.typography.lineHeight.tight,
     },
     button: {
-      fontWeight: typography.fontWeight.medium,
+      fontWeight: tokens.typography.fontWeight.medium,
       textTransform: 'none',
-      letterSpacing: typography.letterSpacing.wide,
+      letterSpacing: tokens.typography.letterSpacing.wide,
     },
   },
   spacing: 8,
   shape: {
-    borderRadius: parseInt(borderRadius.base),
+    borderRadius: parseInt(tokens.borderRadius.base),
   },
   transitions: {
     duration: {
-      shortest: parseInt(transitions.duration.fastest),
-      shorter: parseInt(transitions.duration.fast),
-      short: parseInt(transitions.duration.normal),
-      standard: parseInt(transitions.duration.normal),
-      complex: parseInt(transitions.duration.slow),
-      enteringScreen: parseInt(transitions.duration.normal),
-      leavingScreen: parseInt(transitions.duration.fast),
+      shortest: parseInt(tokens.transitions.duration.fastest),
+      shorter: parseInt(tokens.transitions.duration.fast),
+      short: parseInt(tokens.transitions.duration.normal),
+      standard: parseInt(tokens.transitions.duration.normal),
+      complex: parseInt(tokens.transitions.duration.slow),
+      enteringScreen: parseInt(tokens.transitions.duration.normal),
+      leavingScreen: parseInt(tokens.transitions.duration.fast),
     },
     easing: {
-      easeInOut: transitions.easing.easeInOut,
-      easeOut: transitions.easing.easeOut,
-      easeIn: transitions.easing.easeIn,
-      sharp: transitions.easing.linear,
+      easeInOut: tokens.transitions.easing.easeInOut,
+      easeOut: tokens.transitions.easing.easeOut,
+      easeIn: tokens.transitions.easing.easeIn,
+      sharp: tokens.transitions.easing.linear,
     },
   },
 };
@@ -91,33 +91,33 @@ export const lightTheme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: colors.primary[500],
-      light: colors.primary[300],
-      dark: colors.primary[700],
+      main: tokens.colors.primary[500],
+      light: tokens.colors.primary[300],
+      dark: tokens.colors.primary[700],
       contrastText: '#ffffff',
     },
     secondary: {
-      main: colors.secondary[500],
-      light: colors.secondary[300],
-      dark: colors.secondary[700],
+      main: tokens.colors.secondary[500],
+      light: tokens.colors.secondary[300],
+      dark: tokens.colors.secondary[700],
       contrastText: '#ffffff',
     },
     success: {
-      main: colors.success[500],
-      light: colors.success[300],
-      dark: colors.success[700],
+      main: tokens.colors.success[500],
+      light: tokens.colors.success[300],
+      dark: tokens.colors.success[700],
       contrastText: '#ffffff',
     },
     warning: {
-      main: colors.warning[500],
-      light: colors.warning[300],
-      dark: colors.warning[700],
+      main: tokens.colors.warning[500],
+      light: tokens.colors.warning[300],
+      dark: tokens.colors.warning[700],
       contrastText: '#ffffff',
     },
     error: {
-      main: colors.error[500],
-      light: colors.error[300],
-      dark: colors.error[700],
+      main: tokens.colors.error[500],
+      light: tokens.colors.error[300],
+      dark: tokens.colors.error[700],
       contrastText: '#ffffff',
     },
     background: {
@@ -125,29 +125,62 @@ export const lightTheme = createTheme({
       paper: '#ffffff',
     },
     text: {
-      primary: colors.neutral[900],
-      secondary: colors.neutral[600],
+      primary: tokens.colors.neutral[900],
+      secondary: tokens.colors.neutral[600],
     },
-    divider: colors.neutral[200],
+    divider: tokens.colors.neutral[200],
   },
   components: {
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: borderRadius.base,
-          padding: spacing[2] + ' ' + spacing[3],
-          fontSize: typography.fontSize.sm,
-          fontWeight: typography.fontWeight.medium,
+          borderRadius: tokens.borderRadius.base,
+          padding: tokens.spacing[2] + ' ' + tokens.spacing[3],
+          fontSize: tokens.typography.fontSize.sm,
+          fontWeight: tokens.typography.fontWeight.medium,
           boxShadow: 'none',
-          transition: `all ${transitions.duration.fast} ${transitions.easing.easeInOut}`,
+          transition: `all ${tokens.transitions.duration.fast} ${tokens.transitions.easing.easeInOut}`,
           '&:hover': {
-            boxShadow: shadows.md,
+            boxShadow: tokens.shadows.md,
             transform: 'translateY(-1px)',
+          },
+          '&:focus': {
+            outline: `2px solid ${tokens.colors.primary[500]}`,
+            outlineOffset: '2px',
+          },
+          '&:disabled': {
+            opacity: 0.6,
+            cursor: 'not-allowed',
           },
         },
         contained: {
           '&:hover': {
-            boxShadow: shadows.lg,
+            boxShadow: tokens.shadows.lg,
+          },
+        },
+        outlined: {
+          '&:hover': {
+            backgroundColor: 'rgba(0, 0, 0, 0.04)',
+          },
+        },
+        text: {
+          '&:hover': {
+            backgroundColor: 'rgba(0, 0, 0, 0.04)',
+          },
+        },
+      },
+    },
+    MuiIconButton: {
+      styleOverrides: {
+        root: {
+          transition: `all ${tokens.transitions.duration.fast} ${tokens.transitions.easing.easeInOut}`,
+          '&:hover': {
+            backgroundColor: 'rgba(0, 0, 0, 0.04)',
+            transform: 'scale(1.05)',
+          },
+          '&:focus': {
+            outline: `2px solid ${tokens.colors.primary[500]}`,
+            outlineOffset: '2px',
           },
         },
       },
@@ -155,12 +188,13 @@ export const lightTheme = createTheme({
     MuiCard: {
       styleOverrides: {
         root: {
-          borderRadius: borderRadius.md,
-          boxShadow: shadows.base,
-          border: `1px solid ${colors.neutral[200]}`,
-          transition: `all ${transitions.duration.fast} ${transitions.easing.easeInOut}`,
+          borderRadius: tokens.borderRadius.md,
+          boxShadow: tokens.shadows.base,
+          border: `1px solid ${tokens.colors.neutral[200]}`,
+          transition: `all ${tokens.transitions.duration.fast} ${tokens.transitions.easing.easeInOut}`,
           '&:hover': {
-            boxShadow: shadows.md,
+            boxShadow: tokens.shadows.md,
+            transform: 'translateY(-2px)',
           },
         },
       },
@@ -169,16 +203,21 @@ export const lightTheme = createTheme({
       styleOverrides: {
         root: {
           '& .MuiOutlinedInput-root': {
-            borderRadius: borderRadius.base,
-            transition: `all ${transitions.duration.fast} ${transitions.easing.easeInOut}`,
+            borderRadius: tokens.borderRadius.base,
+            transition: `all ${tokens.transitions.duration.fast} ${tokens.transitions.easing.easeInOut}`,
             '&:hover': {
               '& .MuiOutlinedInput-notchedOutline': {
-                borderColor: colors.primary[300],
+                borderColor: tokens.colors.primary[300],
               },
             },
             '&.Mui-focused': {
               '& .MuiOutlinedInput-notchedOutline': {
                 borderWidth: '2px',
+              },
+            },
+            '&.Mui-error': {
+              '& .MuiOutlinedInput-notchedOutline': {
+                borderColor: tokens.colors.error[500],
               },
             },
           },
@@ -188,9 +227,12 @@ export const lightTheme = createTheme({
     MuiChip: {
       styleOverrides: {
         root: {
-          borderRadius: borderRadius.sm,
-          fontWeight: typography.fontWeight.medium,
-          transition: `all ${transitions.duration.fast} ${transitions.easing.easeInOut}`,
+          borderRadius: tokens.borderRadius.sm,
+          fontWeight: tokens.typography.fontWeight.medium,
+          transition: `all ${tokens.transitions.duration.fast} ${tokens.transitions.easing.easeInOut}`,
+          '&:hover': {
+            transform: 'scale(1.02)',
+          },
         },
       },
     },
@@ -198,10 +240,48 @@ export const lightTheme = createTheme({
       styleOverrides: {
         root: {
           backgroundColor: '#ffffff',
-          color: colors.neutral[900],
-          boxShadow: shadows.base,
-          borderBottom: `1px solid ${colors.neutral[200]}`,
+          color: tokens.colors.neutral[900],
+          boxShadow: tokens.shadows.base,
+          borderBottom: `1px solid ${tokens.colors.neutral[200]}`,
           backdropFilter: 'blur(8px)',
+        },
+      },
+    },
+    MuiDrawer: {
+      styleOverrides: {
+        paper: {
+          borderRight: `1px solid ${tokens.colors.neutral[200]}`,
+          backgroundColor: '#ffffff',
+        },
+      },
+    },
+    MuiListItemButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: tokens.borderRadius.base,
+          transition: `all ${tokens.transitions.duration.fast} ${tokens.transitions.easing.easeInOut}`,
+          '&:hover': {
+            backgroundColor: `rgba(${tokens.colors.primary[500]}, 0.08)`,
+            transform: 'translateX(2px)',
+          },
+          '&.Mui-selected': {
+            backgroundColor: `rgba(${tokens.colors.primary[500]}, 0.12)`,
+            color: tokens.colors.primary[700],
+            '&:hover': {
+              backgroundColor: `rgba(${tokens.colors.primary[500]}, 0.16)`,
+            },
+          },
+        },
+      },
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          borderRadius: tokens.borderRadius.base,
+          transition: `all ${tokens.transitions.duration.fast} ${tokens.transitions.easing.easeInOut}`,
+          '&:hover': {
+            backgroundColor: `rgba(${tokens.colors.primary[500]}, 0.08)`,
+          },
         },
       },
     },
@@ -211,13 +291,48 @@ export const lightTheme = createTheme({
           backgroundImage: 'none',
         },
         elevation1: {
-          boxShadow: shadows.sm,
+          boxShadow: tokens.shadows.sm,
         },
         elevation2: {
-          boxShadow: shadows.base,
+          boxShadow: tokens.shadows.base,
         },
         elevation3: {
-          boxShadow: shadows.md,
+          boxShadow: tokens.shadows.md,
+        },
+        elevation8: {
+          boxShadow: tokens.shadows.xl,
+        },
+      },
+    },
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          backgroundColor: tokens.colors.neutral[800],
+          fontSize: tokens.typography.fontSize.sm,
+          borderRadius: tokens.borderRadius.base,
+          padding: `${tokens.spacing[1]} ${tokens.spacing[2]}`,
+        },
+        arrow: {
+          color: tokens.colors.neutral[800],
+        },
+      },
+    },
+    MuiAlert: {
+      styleOverrides: {
+        root: {
+          borderRadius: tokens.borderRadius.base,
+          '& .MuiAlert-icon': {
+            fontSize: '1.25rem',
+          },
+        },
+      },
+    },
+    MuiSnackbar: {
+      styleOverrides: {
+        root: {
+          '& .MuiAlert-root': {
+            boxShadow: tokens.shadows.lg,
+          },
         },
       },
     },
@@ -229,33 +344,33 @@ export const darkTheme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: colors.primary[400],
-      light: colors.primary[300],
-      dark: colors.primary[600],
+      main: tokens.colors.primary[400],
+      light: tokens.colors.primary[300],
+      dark: tokens.colors.primary[600],
       contrastText: '#ffffff',
     },
     secondary: {
-      main: colors.secondary[400],
-      light: colors.secondary[300],
-      dark: colors.secondary[600],
+      main: tokens.colors.secondary[400],
+      light: tokens.colors.secondary[300],
+      dark: tokens.colors.secondary[600],
       contrastText: '#ffffff',
     },
     success: {
-      main: colors.success[400],
-      light: colors.success[300],
-      dark: colors.success[600],
+      main: tokens.colors.success[400],
+      light: tokens.colors.success[300],
+      dark: tokens.colors.success[600],
       contrastText: '#ffffff',
     },
     warning: {
-      main: colors.warning[400],
-      light: colors.warning[300],
-      dark: colors.warning[600],
+      main: tokens.colors.warning[400],
+      light: tokens.colors.warning[300],
+      dark: tokens.colors.warning[600],
       contrastText: '#ffffff',
     },
     error: {
-      main: colors.error[400],
-      light: colors.error[300],
-      dark: colors.error[600],
+      main: tokens.colors.error[400],
+      light: tokens.colors.error[300],
+      dark: tokens.colors.error[600],
       contrastText: '#ffffff',
     },
     background: {
@@ -263,20 +378,29 @@ export const darkTheme = createTheme({
       paper: '#1e293b',
     },
     text: {
-      primary: colors.neutral[100],
-      secondary: colors.neutral[400],
+      primary: tokens.colors.neutral[100],
+      secondary: tokens.colors.neutral[400],
     },
-    divider: colors.neutral[700],
+    divider: tokens.colors.neutral[700],
   },
   components: {
+    ...baseTheme.components,
     MuiAppBar: {
       styleOverrides: {
         root: {
           backgroundColor: '#1e293b',
-          color: colors.neutral[100],
-          boxShadow: shadows.md,
-          borderBottom: `1px solid ${colors.neutral[700]}`,
+          color: tokens.colors.neutral[100],
+          boxShadow: tokens.shadows.md,
+          borderBottom: `1px solid ${tokens.colors.neutral[700]}`,
           backdropFilter: 'blur(8px)',
+        },
+      },
+    },
+    MuiDrawer: {
+      styleOverrides: {
+        paper: {
+          backgroundColor: '#1e293b',
+          borderRight: `1px solid ${tokens.colors.neutral[700]}`,
         },
       },
     },
@@ -284,10 +408,21 @@ export const darkTheme = createTheme({
       styleOverrides: {
         root: {
           backgroundColor: '#1e293b',
-          border: `1px solid ${colors.neutral[700]}`,
+          border: `1px solid ${tokens.colors.neutral[700]}`,
           '&:hover': {
-            boxShadow: shadows.lg,
+            boxShadow: tokens.shadows.lg,
           },
+        },
+      },
+    },
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          backgroundColor: tokens.colors.neutral[200],
+          color: tokens.colors.neutral[900],
+        },
+        arrow: {
+          color: tokens.colors.neutral[200],
         },
       },
     },

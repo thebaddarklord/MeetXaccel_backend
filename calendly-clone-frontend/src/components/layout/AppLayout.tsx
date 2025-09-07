@@ -21,6 +21,8 @@ import {
   Tooltip,
   useTheme,
   useMediaQuery,
+  Collapse,
+  alpha,
 } from '@mui/material';
 import {
   Menu as MenuIcon,
@@ -39,6 +41,13 @@ import {
   ChevronRight,
   LightMode,
   DarkMode,
+  ExpandLess,
+  ExpandMore,
+  Person,
+  Security,
+  Business,
+  NotificationsActive,
+  Circle,
 } from '@mui/icons-material';
 import { useAuth } from '@/hooks/useAuth';
 import { useThemeMode } from '@/hooks/useThemeMode';
@@ -47,6 +56,9 @@ import { RootState } from '@/store';
 import { toggleSidebar, toggleSidebarCollapsed } from '@/store/slices/uiSlice';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { useTranslation } from 'next-i18next';
+import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher';
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -56,14 +68,67 @@ const drawerWidth = 280;
 const collapsedDrawerWidth = 64;
 
 const navigationItems = [
-  { label: 'Dashboard', icon: Dashboard, href: '/dashboard', permission: null },
-  { label: 'Event Types', icon: Event, href: '/event-types', permission: 'can_create_events' },
-  { label: 'Bookings', icon: Schedule, href: '/bookings', permission: 'can_manage_bookings' },
-  { label: 'Availability', icon: Schedule, href: '/availability', permission: null },
-  { label: 'Integrations', icon: Integration, href: '/integrations', permission: 'can_manage_integrations' },
-  { label: 'Workflows', icon: Workflow, href: '/workflows', permission: null },
-  { label: 'Contacts', icon: Contacts, href: '/contacts', permission: null },
-  { label: 'Analytics', icon: Analytics, href: '/analytics', permission: 'can_view_reports' },
+  { 
+    label: 'Dashboard', 
+    icon: Dashboard, 
+    href: '/dashboard', 
+    permission: null,
+    translationKey: 'navigation.dashboard'
+  },
+  { 
+    label: 'Event Types', 
+    icon: Event, 
+    href: '/event-types', 
+    permission: 'can_create_events',
+    translationKey: 'navigation.eventTypes'
+  },
+  { 
+    label: 'Bookings', 
+    icon: Schedule, 
+    href: '/bookings', 
+    permission: 'can_manage_bookings',
+    translationKey: 'navigation.bookings'
+  },
+  { 
+    label: 'Availability', 
+    icon: Schedule, 
+    href: '/availability', 
+    permission: null,
+    translationKey: 'navigation.availability'
+  },
+  { 
+    label: 'Integrations', 
+    icon: Integration, 
+    href: '/integrations', 
+    permission: 'can_manage_integrations',
+    translationKey: 'navigation.integrations',
+    children: [
+      { label: 'Calendar', icon: Schedule, href: '/integrations/calendar', permission: null },
+      { label: 'Video', icon: Schedule, href: '/integrations/video', permission: null },
+      { label: 'Webhooks', icon: Schedule, href: '/integrations/webhooks', permission: null },
+    ]
+  },
+  { 
+    label: 'Workflows', 
+    icon: Workflow, 
+    href: '/workflows', 
+    permission: null,
+    translationKey: 'navigation.workflows'
+  },
+  { 
+    label: 'Contacts', 
+    icon: Contacts, 
+    href: '/contacts', 
+    permission: null,
+    translationKey: 'navigation.contacts'
+  },
+  { 
+    label: 'Analytics', 
+    icon: Analytics, 
+    href: '/analytics', 
+    permission: 'can_view_reports',
+    translationKey: 'navigation.analytics'
+  },
 ];
 
 export function AppLayout({ children }: AppLayoutProps) {
@@ -71,6 +136,7 @@ export function AppLayout({ children }: AppLayoutProps) {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { user, logout, hasPermission } = useAuth();
   const { mode, toggleTheme } = useThemeMode();
+  const { t } = useTranslation('common');
   const dispatch = useDispatch();
   const router = useRouter();
   
@@ -78,6 +144,11 @@ export function AppLayout({ children }: AppLayoutProps) {
   
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [notificationAnchorEl, setNotificationAnchorEl] = useState<null | HTMLElement>(null);
+  const [expandedItems, setExpandedItems] = useState<string[]>([]);
+  const [notifications] = useState([
+    { id: '1', title: 'New booking', message: 'John Doe booked a meeting', time: '2 min ago', read: false },
+    { id: '2', title: 'Calendar synced', message: 'Google Calendar sync completed', time: '1 hour ago', read: true },
+  ]);
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -109,14 +180,84 @@ export function AppLayout({ children }: AppLayoutProps) {
     }
   };
 
+  const handleExpandClick = (itemLabel: string) => {
+    setExpandedItems(prev => 
+      prev.includes(itemLabel) 
+        ? prev.filter(item => item !== itemLabel)
+        : [...prev, itemLabel]
+    );
+  };
+
+  const unreadNotifications = notifications.filter(n => !n.read).length;
+
   const currentDrawerWidth = sidebarCollapsed && !isMobile ? collapsedDrawerWidth : drawerWidth;
+
+  const renderNavigationItem = (item: any, depth = 0) => {
+    const hasChildren = item.children && item.children.length > 0;
+    const isExpanded = expandedItems.includes(item.label);
+    const translatedLabel = item.translationKey ? t(item.translationKey) : item.label;
+
+    // Check permissions
+    if (item.permission && !hasPermission(item.permission)) {
+      return null;
+    }
+
+    return (
+      <Box key={item.label}>
+        <ListItem disablePadding sx={{ mb: 0.5 }}>
+          <ListItemButton
+            component={hasChildren ? 'div' : Link}
+            href={hasChildren ? undefined : item.href}
+            onClick={hasChildren ? () => handleExpandClick(item.label) : undefined}
+            sx={{
+              borderRadius: 1,
+              ml: depth * 2,
+              pl: sidebarCollapsed ? 1.5 : 2,
+              '&:hover': {
+                backgroundColor: alpha(theme.palette.primary.main, 0.08),
+              },
+              '&.active': {
+                backgroundColor: alpha(theme.palette.primary.main, 0.12),
+                color: 'primary.main',
+                '& .MuiListItemIcon-root': {
+                  color: 'primary.main',
+                },
+              },
+            }}
+          >
+            <ListItemIcon sx={{ minWidth: sidebarCollapsed ? 'auto' : 40 }}>
+              <item.icon />
+            </ListItemIcon>
+            {!sidebarCollapsed && (
+              <>
+                <ListItemText primary={translatedLabel} />
+                {hasChildren && (
+                  <IconButton size="small" edge="end">
+                    {isExpanded ? <ExpandLess /> : <ExpandMore />}
+                  </IconButton>
+                )}
+              </>
+            )}
+          </ListItemButton>
+        </ListItem>
+        
+        {hasChildren && !sidebarCollapsed && (
+          <Collapse in={isExpanded} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              {item.children.map((child: any) => renderNavigationItem(child, depth + 1))}
+            </List>
+          </Collapse>
+        )}
+      </Box>
+    );
+  };
 
   const drawer = (
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <Box sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         {!sidebarCollapsed && (
           <Typography variant="h6" component="div" sx={{ fontWeight: 700, color: 'primary.main' }}>
-            Calendly Clone
+            {t('common:appName', 'Calendly Clone')}
           </Typography>
         )}
         {!isMobile && (
@@ -129,32 +270,7 @@ export function AppLayout({ children }: AppLayoutProps) {
       <Divider />
       
       <List sx={{ flexGrow: 1, px: 1 }}>
-        {navigationItems.map((item) => {
-          // Check permissions
-          if (item.permission && !hasPermission(item.permission)) {
-            return null;
-          }
-
-          return (
-            <ListItem key={item.label} disablePadding sx={{ mb: 0.5 }}>
-              <ListItemButton
-                component={Link}
-                href={item.href}
-                sx={{
-                  borderRadius: 1,
-                  '&:hover': {
-                    backgroundColor: 'action.hover',
-                  },
-                }}
-              >
-                <ListItemIcon sx={{ minWidth: sidebarCollapsed ? 'auto' : 40 }}>
-                  <item.icon />
-                </ListItemIcon>
-                {!sidebarCollapsed && <ListItemText primary={item.label} />}
-              </ListItemButton>
-            </ListItem>
-          );
-        })}
+        {navigationItems.map((item) => renderNavigationItem(item))}
       </List>
       
       <Divider />
@@ -169,7 +285,7 @@ export function AppLayout({ children }: AppLayoutProps) {
             <ListItemIcon sx={{ minWidth: sidebarCollapsed ? 'auto' : 40 }}>
               <Settings />
             </ListItemIcon>
-            {!sidebarCollapsed && <ListItemText primary="Settings" />}
+            {!sidebarCollapsed && <ListItemText primary={t('navigation.settings')} />}
           </ListItemButton>
         </ListItem>
       </List>
@@ -202,6 +318,9 @@ export function AppLayout({ children }: AppLayoutProps) {
             {user?.profile?.display_name || `${user?.first_name} ${user?.last_name}`}
           </Typography>
 
+          {/* Language Switcher */}
+          <LanguageSwitcher variant="icon" size="medium" />
+
           {/* Theme Toggle */}
           <Tooltip title={`Switch to ${mode === 'light' ? 'dark' : 'light'} mode`}>
             <IconButton color="inherit" onClick={toggleTheme}>
@@ -210,9 +329,9 @@ export function AppLayout({ children }: AppLayoutProps) {
           </Tooltip>
 
           {/* Notifications */}
-          <Tooltip title="Notifications">
+          <Tooltip title={t('accessibility.notifications')}>
             <IconButton color="inherit" onClick={handleNotificationMenuOpen}>
-              <Badge badgeContent={0} color="error">
+              <Badge badgeContent={unreadNotifications} color="error">
                 <Notifications />
               </Badge>
             </IconButton>
@@ -255,25 +374,67 @@ export function AppLayout({ children }: AppLayoutProps) {
         }}
         open={Boolean(anchorEl)}
         onClose={handleProfileMenuClose}
+        PaperProps={{
+          sx: {
+            mt: 1,
+            minWidth: 200,
+            boxShadow: theme.shadows[8],
+            '& .MuiMenuItem-root': {
+              px: 2,
+              py: 1,
+              borderRadius: 1,
+              mx: 1,
+              '&:hover': {
+                backgroundColor: alpha(theme.palette.primary.main, 0.08),
+              },
+            },
+          },
+        }}
       >
+        <Box sx={{ px: 2, py: 1.5, borderBottom: 1, borderColor: 'divider' }}>
+          <Typography variant="subtitle2" fontWeight={600}>
+            {user?.first_name} {user?.last_name}
+          </Typography>
+          <Typography variant="caption" color="text.secondary">
+            {user?.email}
+          </Typography>
+        </Box>
+        
         <MenuItem onClick={() => { router.push('/profile'); handleProfileMenuClose(); }}>
           <ListItemIcon>
-            <AccountCircle fontSize="small" />
+            <Person fontSize="small" />
           </ListItemIcon>
-          Profile
+          {t('navigation.profile')}
         </MenuItem>
+        
         <MenuItem onClick={() => { router.push('/settings'); handleProfileMenuClose(); }}>
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>
-          Settings
+          {t('navigation.settings')}
         </MenuItem>
+        
+        <MenuItem onClick={() => { router.push('/settings/security'); handleProfileMenuClose(); }}>
+          <ListItemIcon>
+            <Security fontSize="small" />
+          </ListItemIcon>
+          Security
+        </MenuItem>
+        
+        <MenuItem onClick={() => { router.push('/settings/billing'); handleProfileMenuClose(); }}>
+          <ListItemIcon>
+            <Business fontSize="small" />
+          </ListItemIcon>
+          Billing
+        </MenuItem>
+        
         <Divider />
+        
         <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
-          Logout
+          {t('navigation.logout')}
         </MenuItem>
       </Menu>
 
@@ -291,12 +452,82 @@ export function AppLayout({ children }: AppLayoutProps) {
         }}
         open={Boolean(notificationAnchorEl)}
         onClose={handleNotificationMenuClose}
+        PaperProps={{
+          sx: {
+            mt: 1,
+            minWidth: 320,
+            maxWidth: 400,
+            maxHeight: 400,
+            boxShadow: theme.shadows[8],
+          },
+        }}
       >
-        <MenuItem>
-          <Typography variant="body2" color="text.secondary">
-            No new notifications
+        <Box sx={{ px: 2, py: 1.5, borderBottom: 1, borderColor: 'divider' }}>
+          <Typography variant="subtitle2" fontWeight={600}>
+            Notifications
           </Typography>
-        </MenuItem>
+          {unreadNotifications > 0 && (
+            <Typography variant="caption" color="primary.main">
+              {unreadNotifications} unread
+            </Typography>
+          )}
+        </Box>
+        
+        {notifications.length === 0 ? (
+          <MenuItem disabled>
+            <Typography variant="body2" color="text.secondary">
+              No notifications
+            </Typography>
+          </MenuItem>
+        ) : (
+          notifications.map((notification) => (
+            <MenuItem
+              key={notification.id}
+              onClick={handleNotificationMenuClose}
+              sx={{
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                py: 1.5,
+                borderBottom: 1,
+                borderColor: 'divider',
+                '&:last-child': {
+                  borderBottom: 0,
+                },
+              }}
+            >
+              <Box display="flex" alignItems="center" gap={1} width="100%">
+                <Circle
+                  sx={{
+                    fontSize: 8,
+                    color: notification.read ? 'transparent' : 'primary.main',
+                  }}
+                />
+                <Typography variant="subtitle2" fontWeight={500} flexGrow={1}>
+                  {notification.title}
+                </Typography>
+                <Typography variant="caption" color="text.secondary">
+                  {notification.time}
+                </Typography>
+              </Box>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{ mt: 0.5, ml: 2 }}
+              >
+                {notification.message}
+              </Typography>
+            </MenuItem>
+          ))
+        )}
+        
+        <Box sx={{ p: 1 }}>
+          <MenuItem
+            onClick={() => { router.push('/notifications'); handleNotificationMenuClose(); }}
+            sx={{ justifyContent: 'center', fontWeight: 500 }}
+          >
+            View All Notifications
+          </MenuItem>
+        </Box>
       </Menu>
 
       {/* Sidebar */}
