@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Providers } from '@/lib/providers';
 import { NotificationSystem } from '@/components/ui/NotificationSystem';
 import { ErrorBoundary } from '@/components/ui/ErrorBoundary';
+import { appWithTranslation } from 'next-i18next';
 
 export const metadata: Metadata = {
   title: 'Calendly Clone - Professional Scheduling Platform',
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+function RootLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -47,3 +48,5 @@ export default function RootLayout({
     </html>
   );
 }
+
+export default appWithTranslation(RootLayout);

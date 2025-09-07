@@ -2,6 +2,7 @@
 
 import { createTheme, ThemeOptions } from '@mui/material/styles';
 import { Roboto } from 'next/font/google';
+import { colors, typography, spacing, borderRadius, shadows, transitions } from './theme/tokens';
 
 const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
@@ -9,138 +10,79 @@ const roboto = Roboto({
   display: 'swap',
 });
 
-// Professional color palette for enterprise scheduling platform
-const colors = {
-  primary: {
-    50: '#f0f9ff',
-    100: '#e0f2fe',
-    200: '#bae6fd',
-    300: '#7dd3fc',
-    400: '#38bdf8',
-    500: '#0ea5e9', // Main primary
-    600: '#0284c7',
-    700: '#0369a1',
-    800: '#075985',
-    900: '#0c4a6e',
-  },
-  secondary: {
-    50: '#f8fafc',
-    100: '#f1f5f9',
-    200: '#e2e8f0',
-    300: '#cbd5e1',
-    400: '#94a3b8',
-    500: '#64748b', // Main secondary
-    600: '#475569',
-    700: '#334155',
-    800: '#1e293b',
-    900: '#0f172a',
-  },
-  success: {
-    50: '#f0fdf4',
-    100: '#dcfce7',
-    200: '#bbf7d0',
-    300: '#86efac',
-    400: '#4ade80',
-    500: '#22c55e', // Main success
-    600: '#16a34a',
-    700: '#15803d',
-    800: '#166534',
-    900: '#14532d',
-  },
-  warning: {
-    50: '#fffbeb',
-    100: '#fef3c7',
-    200: '#fde68a',
-    300: '#fcd34d',
-    400: '#fbbf24',
-    500: '#f59e0b', // Main warning
-    600: '#d97706',
-    700: '#b45309',
-    800: '#92400e',
-    900: '#78350f',
-  },
-  error: {
-    50: '#fef2f2',
-    100: '#fee2e2',
-    200: '#fecaca',
-    300: '#fca5a5',
-    400: '#f87171',
-    500: '#ef4444', // Main error
-    600: '#dc2626',
-    700: '#b91c1c',
-    800: '#991b1b',
-    900: '#7f1d1d',
-  },
-  neutral: {
-    50: '#fafafa',
-    100: '#f5f5f5',
-    200: '#e5e5e5',
-    300: '#d4d4d4',
-    400: '#a3a3a3',
-    500: '#737373',
-    600: '#525252',
-    700: '#404040',
-    800: '#262626',
-    900: '#171717',
-  },
-};
-
 const baseTheme: ThemeOptions = {
   typography: {
-    fontFamily: roboto.style.fontFamily,
+    fontFamily: typography.fontFamily.primary,
     h1: {
-      fontSize: '2.5rem',
-      fontWeight: 700,
-      lineHeight: 1.2,
-      letterSpacing: '-0.02em',
+      fontSize: typography.fontSize['4xl'],
+      fontWeight: typography.fontWeight.bold,
+      lineHeight: typography.lineHeight.tight,
+      letterSpacing: typography.letterSpacing.tight,
     },
     h2: {
-      fontSize: '2rem',
-      fontWeight: 600,
-      lineHeight: 1.3,
-      letterSpacing: '-0.01em',
+      fontSize: typography.fontSize['3xl'],
+      fontWeight: typography.fontWeight.semibold,
+      lineHeight: typography.lineHeight.tight,
+      letterSpacing: typography.letterSpacing.tight,
     },
     h3: {
-      fontSize: '1.75rem',
-      fontWeight: 600,
-      lineHeight: 1.3,
+      fontSize: typography.fontSize['2xl'],
+      fontWeight: typography.fontWeight.semibold,
+      lineHeight: typography.lineHeight.tight,
     },
     h4: {
-      fontSize: '1.5rem',
-      fontWeight: 500,
-      lineHeight: 1.4,
+      fontSize: typography.fontSize.xl,
+      fontWeight: typography.fontWeight.medium,
+      lineHeight: typography.lineHeight.normal,
     },
     h5: {
-      fontSize: '1.25rem',
-      fontWeight: 500,
-      lineHeight: 1.4,
+      fontSize: typography.fontSize.lg,
+      fontWeight: typography.fontWeight.medium,
+      lineHeight: typography.lineHeight.normal,
     },
     h6: {
-      fontSize: '1.125rem',
-      fontWeight: 500,
-      lineHeight: 1.4,
+      fontSize: typography.fontSize.base,
+      fontWeight: typography.fontWeight.medium,
+      lineHeight: typography.lineHeight.normal,
     },
     body1: {
-      fontSize: '1rem',
-      lineHeight: 1.5,
+      fontSize: typography.fontSize.base,
+      lineHeight: typography.lineHeight.normal,
     },
     body2: {
-      fontSize: '0.875rem',
-      lineHeight: 1.5,
+      fontSize: typography.fontSize.sm,
+      lineHeight: typography.lineHeight.normal,
     },
     caption: {
-      fontSize: '0.75rem',
-      lineHeight: 1.4,
+      fontSize: typography.fontSize.xs,
+      lineHeight: typography.lineHeight.tight,
     },
     button: {
-      fontWeight: 500,
+      fontWeight: typography.fontWeight.medium,
       textTransform: 'none',
-      letterSpacing: '0.02em',
+      letterSpacing: typography.letterSpacing.wide,
     },
   },
-  spacing: 8, // 8px grid system
+  spacing: 8,
   shape: {
-    borderRadius: 8,
+    borderRadius: parseInt(borderRadius.base),
+  },
+  transitions: {
+    duration: {
+      shortest: parseInt(transitions.duration.fastest),
+      shorter: parseInt(transitions.duration.fast),
+      short: parseInt(transitions.duration.normal),
+      standard: parseInt(transitions.duration.normal),
+      complex: parseInt(transitions.duration.slow),
+      enteringScreen: parseInt(transitions.duration.normal),
+      leavingScreen: parseInt(transitions.duration.fast),
+    },
+    easing: {
+      easeInOut: transitions.easing.easeInOut,
+      easeOut: transitions.easing.easeOut,
+      easeIn: transitions.easing.easeIn,
+      sharp: transitions.easing.linear,
+    },
   },
 };
 
@@ -192,18 +134,20 @@ export const lightTheme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: 8,
-          padding: '10px 24px',
-          fontSize: '0.875rem',
-          fontWeight: 500,
+          borderRadius: borderRadius.base,
+          padding: spacing[2] + ' ' + spacing[3],
+          fontSize: typography.fontSize.sm,
+          fontWeight: typography.fontWeight.medium,
           boxShadow: 'none',
+          transition: `all ${transitions.duration.fast} ${transitions.easing.easeInOut}`,
           '&:hover': {
-            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+            boxShadow: shadows.md,
+            transform: 'translateY(-1px)',
           },
         },
         contained: {
           '&:hover': {
-            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+            boxShadow: shadows.lg,
           },
         },
       },
@@ -211,9 +155,13 @@ export const lightTheme = createTheme({
     MuiCard: {
       styleOverrides: {
         root: {
-          borderRadius: 12,
-          boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+          borderRadius: borderRadius.md,
+          boxShadow: shadows.base,
           border: `1px solid ${colors.neutral[200]}`,
+          transition: `all ${transitions.duration.fast} ${transitions.easing.easeInOut}`,
+          '&:hover': {
+            boxShadow: shadows.md,
+          },
         },
       },
     },
@@ -221,7 +169,18 @@ export const lightTheme = createTheme({
       styleOverrides: {
         root: {
           '& .MuiOutlinedInput-root': {
-            borderRadius: 8,
+            borderRadius: borderRadius.base,
+            transition: `all ${transitions.duration.fast} ${transitions.easing.easeInOut}`,
+            '&:hover': {
+              '& .MuiOutlinedInput-notchedOutline': {
+                borderColor: colors.primary[300],
+              },
+            },
+            '&.Mui-focused': {
+              '& .MuiOutlinedInput-notchedOutline': {
+                borderWidth: '2px',
+              },
+            },
           },
         },
       },
@@ -229,8 +188,9 @@ export const lightTheme = createTheme({
     MuiChip: {
       styleOverrides: {
         root: {
-          borderRadius: 6,
-          fontWeight: 500,
+          borderRadius: borderRadius.sm,
+          fontWeight: typography.fontWeight.medium,
+          transition: `all ${transitions.duration.fast} ${transitions.easing.easeInOut}`,
         },
       },
     },
@@ -239,8 +199,25 @@ export const lightTheme = createTheme({
         root: {
           backgroundColor: '#ffffff',
           color: colors.neutral[900],
-          boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+          boxShadow: shadows.base,
           borderBottom: `1px solid ${colors.neutral[200]}`,
+          backdropFilter: 'blur(8px)',
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          backgroundImage: 'none',
+        },
+        elevation1: {
+          boxShadow: shadows.sm,
+        },
+        elevation2: {
+          boxShadow: shadows.base,
+        },
+        elevation3: {
+          boxShadow: shadows.md,
         },
       },
     },
@@ -297,8 +274,9 @@ export const darkTheme = createTheme({
         root: {
           backgroundColor: '#1e293b',
           color: colors.neutral[100],
-          boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)',
+          boxShadow: shadows.md,
           borderBottom: `1px solid ${colors.neutral[700]}`,
+          backdropFilter: 'blur(8px)',
         },
       },
     },
@@ -307,6 +285,9 @@ export const darkTheme = createTheme({
         root: {
           backgroundColor: '#1e293b',
           border: `1px solid ${colors.neutral[700]}`,
+          '&:hover': {
+            boxShadow: shadows.lg,
+          },
         },
       },
     },
