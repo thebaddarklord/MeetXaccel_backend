@@ -15,6 +15,10 @@ const Register = React.lazy(() => import('@/features/auth/pages/Register'))
 const EventTypes = React.lazy(() => import('@/features/events/pages/EventTypes'))
 const Bookings = React.lazy(() => import('@/features/events/pages/Bookings'))
 const Availability = React.lazy(() => import('@/features/availability/pages/Availability'))
+const Integrations = React.lazy(() => import('@/features/integrations/pages/Integrations'))
+const CalendarIntegrations = React.lazy(() => import('@/features/integrations/pages/CalendarIntegrations'))
+const VideoIntegrations = React.lazy(() => import('@/features/integrations/pages/VideoIntegrations'))
+const WebhookIntegrations = React.lazy(() => import('@/features/integrations/pages/WebhookIntegrations'))
 
 // Create a client
 const queryClient = new QueryClient({
@@ -119,6 +123,10 @@ function App() {
                 <Route path={ROUTES.EVENTS} element={<EventTypes />} />
                 <Route path={ROUTES.BOOKINGS} element={<Bookings />} />
                 <Route path={ROUTES.AVAILABILITY} element={<Availability />} />
+                <Route path={ROUTES.INTEGRATIONS} element={<Integrations />} />
+                <Route path={ROUTES.INTEGRATIONS_CALENDAR} element={<CalendarIntegrations />} />
+                <Route path={ROUTES.INTEGRATIONS_VIDEO} element={<VideoIntegrations />} />
+                <Route path={ROUTES.INTEGRATIONS_WEBHOOKS} element={<WebhookIntegrations />} />
               </Route>
 
               {/* Catch all */}

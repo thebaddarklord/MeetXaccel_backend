@@ -2,6 +2,7 @@
 export * from './useAuth'
 export * from './useEvents'
 export * from './useAvailability'
+export * from './useIntegrations'
 export * from './useLocalStorage'
 export * from './useDebounce'
 export * from './useClickOutside'
